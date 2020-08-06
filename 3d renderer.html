@@ -73,15 +73,17 @@
                         rayVector[1] = this.y + this.nodes[i].y;
                         rayVector[2] = this.z + this.nodes[i].z;
                         
+                        //c.fillRect(rayVector[0]+250,rayVector[3]+250,5,5);
+                        
                         var cameraNormal = [];
                         cameraNormal[0] = 0;
                         cameraNormal[1] = 0;
                         cameraNormal[2] = perspective;
                         
                         var testVector = [];
-                        testVector[0] = rayVector[0] + cameraNormal[0];
-                        testVector[1] = rayVector[1] + cameraNormal[1];
-                        testVector[2] = rayVector[2] + cameraNormal[2];
+                        testVector[0] = cameraNormal[0] - rayVector[0];
+                        testVector[1] = cameraNormal[1] - rayVector[1];
+                        testVector[2] = cameraNormal[2] - rayVector[2];
                         
                         var t = -(testVector[0] * cameraNormal[0] + testVector[1] * cameraNormal[1] + testVector[2] * cameraNormal[2]) / (cameraNormal[0] * ray(rayVector[0],rayVector[1],rayVector[2],0,0,0,0,0) + cameraNormal[1] * ray(rayVector[0],rayVector[1],rayVector[2],0,0,0,0,1) + cameraNormal[2] * ray(rayVector[0],rayVector[1],rayVector[2],0,0,0,0,2));
                         
@@ -90,7 +92,7 @@
                         
                         c.fillRect(this.screenX,this.screenY,5,5);
                         
-                        c.fillText(Math.floor(rayVector[0]) + ", " + Math.floor(rayVector[1]) + ", " + Math.floor(rayVector[2]),20,i*15);
+                        c.fillText((this.screenX-250) + ", " + (this.screenY-250),20,(i+1)*15);
                     }
                     c.fillText(this.name,this.screenX+10,this.screenY-10);
                 }
@@ -120,6 +122,9 @@
                     nodeMount.push(new Node(gx,gy,30));
                     nodeMount.push(new Node(gx,gy,40));
                 }
+                if (type == "point") {
+                    nodeMount.push(new Node(gx,gy,gz));   
+                }  
                 if (name == undefined) {
                     globalMeshArr.push(new Mesh(nodeMount,"unnamed",gx,gy,gz));
                 } else {
@@ -127,13 +132,13 @@
                 }    
             }
                 
-            createMesh((Math.random()*100)-50,(Math.random()*100)-50,Math.random()*50+20,10,"cube","Cube1");
+            //createMesh((Math.random()*100)-50,(Math.random()*100)-50,Math.random()*50+20,10,"cube","Cube1");
             /*createMesh((Math.random()*100)-50,(Math.random()*100)-50,Math.random()*50+20,10,"cube","my bitch");
             createMesh((Math.random()*100)-50,(Math.random()*100)-50,Math.random()*50+20,10,"cube","my bitch");
             createMesh((Math.random()*100)-50,(Math.random()*100)-50,Math.random()*50+20,10,"cube","my bitch");*/
+            createMesh(0,-5,10,5,"cube","point1");
             
             var j = 0;
-            var persp = 75;
 
             function animate() {
                 requestAnimationFrame(animate); 
@@ -142,9 +147,12 @@
                 j+=.02;
                 for (var o = 0; o < globalMeshArr.length; o++) {
                     c.fillStyle = "black";
+                    //globalMeshArr[o].z += Math.sin(j)*3;
+                    //globalMeshArr[o].y += Math.sin(j)/3;
+                    globalMeshArr[0].x += Math.cos(j)/3;
                     globalMeshArr[o].drawNodes();
                 }
-                c.fillStyle = "red";
+                /*c.fillStyle = "red";
                 c.fillRect(center[0],center[1],5,5);
                 c.beginPath();
                 c.moveTo(250,0);
@@ -153,7 +161,7 @@
                 c.beginPath();
                 c.moveTo(0,250);
                 c.lineTo(500,250);
-                c.stroke();
+                c.stroke();*/
             }
             animate();
         }
