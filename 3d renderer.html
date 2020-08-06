@@ -103,7 +103,7 @@
                         var testVector = [];
                         testVector[0] = cameraNormal[0] - rayVector[0];
                         testVector[1] = cameraNormal[1] - rayVector[1];
-                        testVector[2] = cameraNormal[2] - rayVector[2];
+                        testVector[2] = cameraNormal[2]*10 - rayVector[2];
                         
                         var t = -(testVector[0] * cameraNormal[0] + testVector[1] * cameraNormal[1] + testVector[2] * cameraNormal[2]) / (cameraNormal[0] * ray(rayVector[0],rayVector[1],rayVector[2],0,0,0,0,0) + cameraNormal[1] * ray(rayVector[0],rayVector[1],rayVector[2],0,0,0,0,1) + cameraNormal[2] * ray(rayVector[0],rayVector[1],rayVector[2],0,0,0,0,2));
                         
@@ -139,10 +139,10 @@
                 
                 var nodeMount = [];
                 if (type == "cube") {
-                    nodeMount.push(new Node(size,size,(size*-1)/4))
-                    nodeMount.push(new Node((size*-1),size,(size*-1)/4));
-                    nodeMount.push(new Node(size,(size*-1),(size*-1)/4));
-                    nodeMount.push(new Node((size*-1),(size*-1),(size*-1)/4));
+                    nodeMount.push(new Node(size,size,(size*-1)))
+                    nodeMount.push(new Node((size*-1),size,(size*-1)));
+                    nodeMount.push(new Node(size,(size*-1),(size*-1)));
+                    nodeMount.push(new Node((size*-1),(size*-1),(size*-1)));
                     
                     nodeMount.push(new Node(size,size,size))
                     nodeMount.push(new Node((size*-1),size,size));
@@ -171,8 +171,8 @@
             /*createMesh((Math.random()*100)-50,(Math.random()*100)-50,Math.random()*50+20,10,"cube","my bitch");
             createMesh((Math.random()*100)-50,(Math.random()*100)-50,Math.random()*50+20,10,"cube","my bitch");
             createMesh((Math.random()*100)-50,(Math.random()*100)-50,Math.random()*50+20,10,"cube","my bitch");*/
-            createMesh(0,-10,40,15,"cube","cube1",40);
-            createMesh(0,10,80,15,"cube","cube2",35);
+            createMesh(0,-40,40*10,30,"cube","cube1",80);
+            createMesh(0,40,80*10,30,"cube","cube2",70);
             
             var j = 0;
 
