@@ -3,26 +3,29 @@
 try {
 	var canvas = document.querySelector("canvas");
 	var c = canvas.getContext("2d");
+	var { cos, sin, sqrt } = Math;
 
-	canvas.width = 800;
-	canvas.height = 450;
+	var w = canvas.width = 800,
+		h = canvas.height = 450;
 
-	var center = [canvas.width / 2, canvas.height / 2];
+	var center = [w / 2, h / 2];
 
 	// |x1 - x2| + |y1 - y2| + |z1 - z2| would be more stable
 	function dist(x, y, z, x1, y1, z1) {
-		return Math.sqrt(Math.pow(x1 - x, 2) + Math.pow(y1 - y, 2) + Math.pow(z1 - z, 2));
+		return sqrt((x1 - x) ** 2 + (y1 - y) ** 2 + (z1 - z) ** 2);
 	}
-	
-	function axisX(x,y,z,angleX,angleY,angleZ) {
-            return (x*(Math.cos(angleX)*Math.cos(angleY))) + (y*((Math.cos(angleX)*Math.sin(angleY)*Math.sin(angleZ))-(Math.sin(angleX)*Math.cos(angleZ)))) + (z*((Math.cos(angleX)*Math.sin(angleY)*Math.cos(angleZ))+(Math.sin(angleX)*Math.sin(angleZ))));
-        }
-        function axisY(x,y,z,angleX,angleY,angleZ) {
-            return (x*(Math.sin(angleX)*Math.cos(angleY))) + (y*((Math.sin(angleX)*Math.sin(angleY)*Math.sin(angleZ))+(Math.cos(angleX)*Math.cos(angleZ)))) + (z*((Math.sin(angleX)*Math.sin(angleY)*Math.cos(angleZ))-(Math.cos(angleX)*Math.sin(angleZ))));
-        }
-        function axisZ(x,y,z,angleX,angleY,angleZ) {
-            return (x*(Math.sin(angleY)*-1)) + (y*(Math.cos(angleY)*Math.sin(angleZ))) + (z*(Math.cos(angleY)*Math.cos(angleZ)))
-        }
+
+	function axisX(x, y, z, angleX, angleY, angleZ) {
+			return (x*(cos(angleX)*cos(angleY))) + (y*((cos(angleX)*sin(angleY)*sin(angleZ))-(sin(angleX)*cos(angleZ)))) + (z*((cos(angleX)*sin(angleY)*cos(angleZ))+(sin(angleX)*sin(angleZ))));
+	}
+
+	function axisY(x, y, z, angleX, angleY, angleZ) {
+		return (x*(sin(angleX)*cos(angleY))) + (y*((sin(angleX)*sin(angleY)*sin(angleZ))+(cos(angleX)*cos(angleZ)))) + (z*((sin(angleX)*sin(angleY)*cos(angleZ))-(cos(angleX)*sin(angleZ))));
+	}
+
+	function axisZ(x, y, z, angleX, angleY, angleZ) {
+		return (x*(sin(angleY)*-1)) + (y*(cos(angleY)*sin(angleZ))) + (z*(cos(angleY)*cos(angleZ)))
+	}
 
 	function Node(x, y, z) {
 		this.x = x;
@@ -41,8 +44,8 @@ try {
 		this.y = y * -1;
 		this.z = z;
 		this.rx = 0;
-                this.ry = 0;
-                this.rz = 0;
+		this.ry = 0;
+		this.rz = 0;
 		this.startDist = startDist;
 
 		for (var i = 0; i < this.nodes.length; i++) {
@@ -57,15 +60,14 @@ try {
 
 		this.setScreenCartesian = function() {
 			for (var i = 0; i < this.nodes.length; i++) {
-
 				// let vector[x,y,z] be the amount of displacement
 				//  relative to the node to position of camera
-				
+
 				// let node[x,y,z] be the camera relative cordinates of each node 
-				
+
 				// let camera[x,y,z] = [0,0,0] as this defines camera
 				//  relative space instead of real space
-				
+
 				// let real space be an offset value matrix for camera relative space 
 				// let the perspective scalar set how far away the plane each
 				//  ray is coliding with is away from the camera point
@@ -77,18 +79,18 @@ try {
 
 				// define parametric equasion for the ray
 				//  [x,y,z,x1,y1,z1] f(t) = [x + t(x1 - x),y + t(y1 - y),z + t(z1 - 1)] 
-				
+
 				// let x,y,z = node[x,y,z]
 				// let x1,y1,z1 = camera[x,y,z]
 
 				// let the camera plane normal (n) vector coordinates
 				//  in camera relative space = [0,0,perspective]
-				
+
 				// let the test vector (w) = [0,0,perspective] + [x,y,z]
 
 				// find t in f(t) with equasion
 				//  -(w[0] * n[0] + w[1] * n[1] + w[2] * n[2]) / (n[0] * p(0)[0] + n[1] * p(0)[1] + n[0] * p(0)[2])
-				
+
 				// plug output of equasion into f(t) to get x,y cordinates
 				// offset coridinates to fit canvas 
 
@@ -191,7 +193,7 @@ try {
 		globalMeshArr.push(new Mesh(nodeMount, name, gx, gy, gz, thresh));
 	}
 
-	createMesh(0,0,40*10,40,"cube","cube1",90);
+	createMesh(0, 0, 40 * 10, 40, "cube", "cube1", 90);
 
 	var j = 0;
 
@@ -203,8 +205,8 @@ try {
 		for (var o = 0; o < globalMeshArr.length; o++) {
 			c.fillStyle = "black";
 			globalMeshArr[o].ry += .02;
-                    	globalMeshArr[o].rx += .02;
-                    	globalMeshArr[o].rz += .02;
+			globalMeshArr[o].rx += .02;
+			globalMeshArr[o].rz += .02;
 			globalMeshArr[o].render();
 		}
 	}
