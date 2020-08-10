@@ -13,6 +13,16 @@ try {
 	function dist(x, y, z, x1, y1, z1) {
 		return Math.sqrt(Math.pow(x1 - x, 2) + Math.pow(y1 - y, 2) + Math.pow(z1 - z, 2));
 	}
+	
+	function axisX(x,y,z,angleX,angleY,angleZ) {
+            return (x*(Math.cos(angleX)*Math.cos(angleY))) + (y*((Math.cos(angleX)*Math.sin(angleY)*Math.sin(angleZ))-(Math.sin(angleX)*Math.cos(angleZ)))) + (z*((Math.cos(angleX)*Math.sin(angleY)*Math.cos(angleZ))+(Math.sin(angleX)*Math.sin(angleZ))));
+        }
+        function axisY(x,y,z,angleX,angleY,angleZ) {
+            return (x*(Math.sin(angleX)*Math.cos(angleY))) + (y*((Math.sin(angleX)*Math.sin(angleY)*Math.sin(angleZ))+(Math.cos(angleX)*Math.cos(angleZ)))) + (z*((Math.sin(angleX)*Math.sin(angleY)*Math.cos(angleZ))-(Math.cos(angleX)*Math.sin(angleZ))));
+        }
+        function axisZ(x,y,z,angleX,angleY,angleZ) {
+            return (x*(Math.sin(angleY)*-1)) + (y*(Math.cos(angleY)*Math.sin(angleZ))) + (z*(Math.cos(angleY)*Math.cos(angleZ)))
+        }
 
 	function Node(x, y, z) {
 		this.x = x;
@@ -30,6 +40,9 @@ try {
 		this.x = x;
 		this.y = y * -1;
 		this.z = z;
+		this.rx = 0;
+                this.ry = 0;
+                this.rz = 0;
 		this.startDist = startDist;
 
 		for (var i = 0; i < this.nodes.length; i++) {
@@ -96,9 +109,9 @@ try {
 				var perspective = +document.querySelector("#persp").value;
 				var rayVector = [];
 
-				rayVector[0] = this.x + this.nodes[i].x;
-				rayVector[1] = this.y + this.nodes[i].y;
-				rayVector[2] = this.z + this.nodes[i].z;
+				rayVector[0] = this.x + axisX(this.nodes[i].x,this.nodes[i].y,this.nodes[i].z,this.rx,this.ry,this.rz);
+				rayVector[1] = this.y + axisY(this.nodes[i].x,this.nodes[i].y,this.nodes[i].z,this.rx,this.ry,this.rz);
+				rayVector[2] = this.z + axisZ(this.nodes[i].x,this.nodes[i].y,this.nodes[i].z,this.rx,this.ry,this.rz);
 
 				var cameraNormal = [];
 				cameraNormal[0] = 0;
@@ -178,8 +191,7 @@ try {
 		globalMeshArr.push(new Mesh(nodeMount, name, gx, gy, gz, thresh));
 	}
 
-	createMesh(0, -40, 40 * 10, 30, "cube", "cube1", 80);
-	createMesh(0, 40, 80 * 10, 30, "cube", "cube2", 70);
+	createMesh(0,0,40*10,40,"cube","cube1",90);
 
 	var j = 0;
 
@@ -190,7 +202,9 @@ try {
 		j += .02;
 		for (var o = 0; o < globalMeshArr.length; o++) {
 			c.fillStyle = "black";
-			globalMeshArr[o].x += Math.cos(j) * 2;
+			globalMeshArr[o].ry += .02;
+                    	globalMeshArr[o].rx += .02;
+                    	globalMeshArr[o].rz += .02;
 			globalMeshArr[o].render();
 		}
 	}
