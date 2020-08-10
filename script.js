@@ -6,26 +6,14 @@ try {
 	var { cos, sin, sqrt } = Math;
 
 	var w = canvas.width = 800,
-		h = canvas.height = 450;
-
-	var center = [w / 2, h / 2];
+		h = canvas.height = 450,
+		center = [w / 2, h / 2];
 
 	// |x1 - x2| + |y1 - y2| + |z1 - z2| would be more stable
-	function dist(x, y, z, x1, y1, z1) {
-		return sqrt((x1 - x) ** 2 + (y1 - y) ** 2 + (z1 - z) ** 2);
-	}
-
-	function axisX(x, y, z, angleX, angleY, angleZ) {
-			return (x*(cos(angleX)*cos(angleY))) + (y*((cos(angleX)*sin(angleY)*sin(angleZ))-(sin(angleX)*cos(angleZ)))) + (z*((cos(angleX)*sin(angleY)*cos(angleZ))+(sin(angleX)*sin(angleZ))));
-	}
-
-	function axisY(x, y, z, angleX, angleY, angleZ) {
-		return (x*(sin(angleX)*cos(angleY))) + (y*((sin(angleX)*sin(angleY)*sin(angleZ))+(cos(angleX)*cos(angleZ)))) + (z*((sin(angleX)*sin(angleY)*cos(angleZ))-(cos(angleX)*sin(angleZ))));
-	}
-
-	function axisZ(x, y, z, angleX, angleY, angleZ) {
-		return (x*(sin(angleY)*-1)) + (y*(cos(angleY)*sin(angleZ))) + (z*(cos(angleY)*cos(angleZ)))
-	}
+	var dist = (x, y, z, x1, y1, z1) => sqrt((x1 - x) ** 2 + (y1 - y) ** 2 + (z1 - z) ** 2);
+	var axisX = (x, y, z, angleX, angleY, angleZ) => (x*(cos(angleX)*cos(angleY))) + (y*((cos(angleX)*sin(angleY)*sin(angleZ))-(sin(angleX)*cos(angleZ)))) + (z*((cos(angleX)*sin(angleY)*cos(angleZ))+(sin(angleX)*sin(angleZ))));
+	var axisY = (x, y, z, angleX, angleY, angleZ) => (x*(sin(angleX)*cos(angleY))) + (y*((sin(angleX)*sin(angleY)*sin(angleZ))+(cos(angleX)*cos(angleZ)))) + (z*((sin(angleX)*sin(angleY)*cos(angleZ))-(cos(angleX)*sin(angleZ))));
+	var axisZ = (x, y, z, angleX, angleY, angleZ) => (x*(sin(angleY)*-1)) + (y*(cos(angleY)*sin(angleZ))) + (z*(cos(angleY)*cos(angleZ)))
 
 	function Node(x, y, z) {
 		this.x = x;
