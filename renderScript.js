@@ -5,17 +5,17 @@ try {
 	var c = canvas.getContext("2d");
 	var { cos, sin, sqrt } = Math;
 
-	var w = canvas.width = 800,
-		h = canvas.height = 450,
+	var w = canvas.width = innerWidth,
+		h = canvas.height = innerHeight,
 		center = [w / 2, h / 2];
 	
 	var cameraX = 0;
-       var cameraY = 0;
-       var cameraZ = 0;
+    var cameraY = 0;
+    var cameraZ = 0;
                
-       var cameraRotX = 0;
-       var cameraRotY = 0;
-       var cameraRotZ = 0;
+    var cameraRotX = 0;
+    var cameraRotY = 0;
+    var cameraRotZ = 0;
                 
                 //these values only corespond to real space and not camera relative space. they are used as an offset for objects within camera relative space
 
@@ -107,6 +107,7 @@ try {
 				}
 
 				var perspective = +document.querySelector("#persp").value;
+                this.perspective = perspective;
 				var rayVector = [];
 				
 				var fullRotX = this.rx + cameraRotX;
@@ -200,21 +201,30 @@ try {
 	createMesh(0, 0, 40 * 10, 40, "cube", "cube1", 90);
 
 	var j = 0;
+    var color = 0;
 
 	function animate() {
 		requestAnimationFrame(animate);
-		c.clearRect(0, 0, innerWidth, innerHeight);
+        c.fillStyle = "black";
+		c.fillRect(0, 0, innerWidth, innerHeight);
 
 		j += .02;
+        
+        cameraRotY = +document.querySelector("#yrot").value/25;
+        
+        color++;
+        
 		for (var o = 0; o < globalMeshArr.length; o++) {
+            c.strokeStyle = "HSL(" + color + ",100%,50%)";
 			c.fillStyle = "black";
 			globalMeshArr[o].ry += .02;
 			globalMeshArr[o].rx += .02;
 			globalMeshArr[o].rz += .02;
 			globalMeshArr[o].render();
 			
-			cameraRotY = +document.querySelector("#yrot").value/25;
+			
 		}
+        
 	}
 
 	animate();
