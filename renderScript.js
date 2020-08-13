@@ -8,6 +8,16 @@ try {
 	var w = canvas.width = 800,
 		h = canvas.height = 450,
 		center = [w / 2, h / 2];
+	
+	var cameraX = 0;
+       var cameraY = 0;
+       var cameraZ = 0;
+               
+       var cameraRotX = 0;
+       var cameraRotY = 0;
+       var cameraRotZ = 0;
+                
+                //these values only corespond to real space and not camera relative space. they are used as an offset for objects within camera relative space
 
 	// |x1 - x2| + |y1 - y2| + |z1 - z2| would be more stable
 	var dist = (x, y, z, x1, y1, z1) => sqrt((x1 - x) ** 2 + (y1 - y) ** 2 + (z1 - z) ** 2);
@@ -98,10 +108,14 @@ try {
 
 				var perspective = +document.querySelector("#persp").value;
 				var rayVector = [];
+				
+				var fullRotX = this.rx + cameraRotX;
+				var fullRotY = this.ry + cameraRotY;
+				var fullRotZ = this.rz + cameraRotZ;
 
-				rayVector[0] = this.x + axisX(this.nodes[i].x,this.nodes[i].y,this.nodes[i].z,this.rx,this.ry,this.rz);
-				rayVector[1] = this.y + axisY(this.nodes[i].x,this.nodes[i].y,this.nodes[i].z,this.rx,this.ry,this.rz);
-				rayVector[2] = this.z + axisZ(this.nodes[i].x,this.nodes[i].y,this.nodes[i].z,this.rx,this.ry,this.rz);
+				rayVector[0] = ((axisX(this.x,this.y,this.z,cameraRotX,cameraRotY,cameraRotZ))-cameraX) + axisX(this.nodes[i].x,this.nodes[i].y,this.nodes[i].z,fullRotX,fullRotY,fullRotZ);
+				rayVector[1] = ((axisY(this.x,this.y,this.z,cameraRotX,cameraRotY,cameraRotZ))-cameraY) + axisY(this.nodes[i].x,this.nodes[i].y,this.nodes[i].z,fullRotX,fullRotY,fullRotZ);
+				rayVector[2] = ((axisZ(this.x,this.y,this.z,cameraRotX,cameraRotY,cameraRotZ))-cameraZ) + axisZ(this.nodes[i].x,this.nodes[i].y,this.nodes[i].z,fullRotX,fullRotY,fullRotZ);
 
 				var cameraNormal = [];
 				cameraNormal[0] = 0;
@@ -128,10 +142,12 @@ try {
 				for (var h = 0; h < this.nodes.length; h++) {
 					if (this.nodes[h] !== this.nodes[i]) {
 						if (dist(this.nodes[i].x, this.nodes[i].y, this.nodes[i].z, this.nodes[h].x, this.nodes[h].y, this.nodes[h].z) < this.startDist) {
-							c.beginPath()
-							c.moveTo(this.nodes[i].screenX, this.nodes[i].screenY);
-							c.lineTo(this.nodes[h].screenX, this.nodes[h].screenY);
-							c.stroke();
+							if ((axisZ(this.x,this.y,this.z,cameraRotX,cameraRotY,cameraRotZ)-cameraZ) - this.nodes[i].z > this.perspective && (axisZ(this.x,this.y,this.z,cameraRotX,cameraRotY,cameraRotZ)-cameraZ) - this.nodes[h].z > this.perspective) {
+							    c.beginPath()
+							    c.moveTo(this.nodes[i].screenX, this.nodes[i].screenY);
+							    c.lineTo(this.nodes[h].screenX, this.nodes[h].screenY);
+							    c.stroke();
+							}  
 						}
 					}
 				}
@@ -196,6 +212,8 @@ try {
 			globalMeshArr[o].rx += .02;
 			globalMeshArr[o].rz += .02;
 			globalMeshArr[o].render();
+			
+			cameraRotY = +document.querySelector("#yrot").value/25;
 		}
 	}
 
