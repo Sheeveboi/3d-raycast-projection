@@ -1,0 +1,141 @@
+3d Raycast Projection Documentation
+
+---
+
+
+object Mesh 
+
+	int x: defines mesh position on x axis
+	int y: defines mesh position on y axis
+	int z: defines mesh position on z axis
+
+	double rx: defines rotation angle for x axis
+	double ry: defines rotation angle for y axis
+	double rz: defines rotation angle for z axis
+	
+	ArrayList<Node> nodes: list of all nodes that are local to the Mesh object
+
+	setScreenCartesian()
+		defines Node objects screenX and screenY attributes
+
+		returns: void
+
+
+object Node
+
+	int x: defines node x axis position relative to its parent Mesh object
+	int y: defines node y axis position relative to its parent Mesh object	
+	int z: defines node x axis position relative to its parent Mesh object
+
+	float screenX: set by Mesh objects setScreenCartesian() method to define point in 2d space on the x axis
+	float screenX: set by Mesh objects setScreenCartesian() method to define point in 2d space on the y axis
+
+	int[] hashArr: defines one or more indexes within parent Mesh objects ArrayList<Node> nodes. used for rendering wireframe lines from one node to another
+	example: if there are 4 nodes within parent Mesh objects ArrayList<Node> nodes, this attribute will tell which nodes to draw a line to (starting from self)
+
+class glVars
+
+	double cameraX: defines the camera cordinates on the x axis
+	double cameraY: defines the camera cordinates on the y axis
+	double cameraZ: defines the camera cordinates on the z axis
+
+	double cameraRX: defines the camera rotation on its x axis
+	double cameraRY: defines the camera rotation on its y axis
+	double cameraRZ: defines the camera rotation on its z axis
+
+	float perspective: defines where rays sent out from the camera origin will intersect with the target plane
+
+class Complex
+
+	eulerX(double x, double y, double z, double angleX, double angleY, double angleZ):
+		defines the rotation of points relative to their local x axis
+		
+		x: point in space on the x axis
+		y: point in space on the y axis
+		z: point in space on the z axis
+
+		angleX: radian of x axis rotation;
+		angleY: radian of y axis rotation;
+		angleZ: radian of z axis rotation;
+
+		returns: double
+
+	eulery(double x, double y, double z, double angleX, double angleY, double angleZ):
+		defines the rotation of points relative to their local Y axis
+		
+		x: point in space on the x axis
+		y: point in space on the y axis
+		z: point in space on the z axis
+
+		angleX: radian of x axis rotation;
+		angleY: radian of y axis rotation;
+		angleZ: radian of z axis rotation;
+
+		returns: double
+
+	eulerZ(double x, double y, double z, double angleX, double angleY, double angleZ):
+		defines the rotation of points relative to their local z axis
+		
+		x: point in space on the x axis
+		y: point in space on the y axis
+		z: point in space on the z axis
+
+		angleX: radian of x axis rotation;
+		angleY: radian of y axis rotation;
+		angleZ: radian of z axis rotation;
+
+		returns: double
+	
+	ray(double p, double p1, double t)
+		defines a one dimensional parametric function based on the equasion p + t(p1 - p)
+
+		p: point 1 on axis
+		p1: point 2 on axis
+
+		t: multiplier, also refered to as 'time'
+
+		returns: double
+
+api ThreeD
+	is accessed with ThreeD.<command>
+
+	initMesh(int x, int y, int z)
+		creates an empty mesh
+
+		x: x value of mesh
+		y: y value of mesh
+		z: z value of mesh
+
+		returns: Constructor Mesh
+
+	initNodes()
+		creates an empty ArrayList for nodes to be mounted
+
+		returns: Constructor ArrayList<Nodes>
+
+	mountNode(int x, int y, int z, int[] hashes) 
+		creates a node
+
+		x: x value of node
+		y: y value of node
+		z: z value of node
+
+		hashes: Array of indexes that the renderer uses to define which nodes to draw to
+
+		returns: Constructor Node
+
+	mountMesh(Mesh mesh, ArrayList nodes) 
+		creates a full mesh with nodes. requires an empty mesh
+		
+		mesh: specified mesh to be mounted to
+		nodes: list of nodes to be mounted to the mesh
+
+		returns: Contructor Mesh
+
+	start(Runnable init, Runnable update)
+		starts the runtime enviorment based on the two methods used
+
+		init: method called at the beggining of the program
+		update: method called every frame
+
+		returns: void
