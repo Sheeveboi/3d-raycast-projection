@@ -42,4 +42,9 @@ public class testScene {
             ThreeD.globalMeshArr.get(i).setScreenCartesian();
         }
     }
+    public static void main() {
+        Runnable x = () -> init();
+        Runnable y = () -> update();
+        ThreeD.start(x,y);
+    }
 }

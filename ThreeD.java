@@ -1,6 +1,8 @@
 import java.util.ArrayList; 
 public class ThreeD {
     public static ArrayList<Mesh> globalMeshArr = new ArrayList<Mesh>();
+    public static Runnable init;
+    public static Runnable update;
    
     public static Mesh initMesh(int x, int y, int z) {
         ArrayList<Node> emptyMap = new ArrayList<Node>();
@@ -17,6 +19,12 @@ public class ThreeD {
         Mesh newMesh = mounted;
         newMesh.nodes = nodes;
         return newMesh;
+    }
+    
+    public static void start(Runnable x, Runnable y) {
+        init = x;
+        update = y;
+        Enviorment.start();
     }
     
 }

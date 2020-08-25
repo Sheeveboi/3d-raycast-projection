@@ -3,14 +3,14 @@ import java.util.ArrayList;
 class Enviorment extends Canvas{
 
     public Enviorment(){
-        setSize(200, 200);
+        setSize(500, 500);
         setBackground(Color.white);
     }
     
     static int xSize = 500;
     static int ySize = 500;
 
-    public static void main(String[] args) {
+    public static void start() {
 
         Enviorment GP = new Enviorment();  
 
@@ -22,11 +22,11 @@ class Enviorment extends Canvas{
     }
 
     public void paint(Graphics c) {  
-        testScene.init();
+        ThreeD.init.run();
         try {
             while (true) {
                 c.clearRect(0,0,xSize,ySize);
-                testScene.update();
+                ThreeD.update.run();
                 for (int i = 0; i < ThreeD.globalMeshArr.size(); i++) {             
                     for (int u = 0; u < ThreeD.globalMeshArr.get(i).nodes.size(); u++) {
                         int screenX = (int)(ThreeD.globalMeshArr.get(i).nodes.get(u).screenX);
