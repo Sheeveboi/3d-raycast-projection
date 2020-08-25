@@ -1,9 +1,6 @@
 public class Complex {
     
-    public static double dist(double x, double y, double z, double x1, double y1, double z1) {
-        return Math.sqrt(Math.pow((x1 - x),2) + Math.pow((y1 - y),2) + Math.pow((z1 - z),2));
-    }
-    
+
     //euler angles
     public static double eulerX(double x, double y, double z, double angleX, double angleY, double angleZ) {
         return (x*(Math.cos(angleX)*Math.cos(angleY))) + (y*((Math.cos(angleX)*Math.sin(angleY)*Math.sin(angleZ))-(Math.sin(angleX)*Math.cos(angleZ)))) + (z*((Math.cos(angleX)*Math.sin(angleY)*Math.cos(angleZ))+(Math.sin(angleX)*Math.sin(angleZ))));

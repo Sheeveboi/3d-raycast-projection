@@ -3,7 +3,7 @@ public class testScene {
     
     public static void init() {
         ArrayList<Node> emptyMap = new ArrayList<Node>();
-        Mesh empty = new Mesh(0,0,200,0,0,0,emptyMap,glVars.perspective);
+        Mesh empty = new Mesh(0,0,200,0,0,0,emptyMap);
         ArrayList nodeMap = ThreeD.initNodes();
         
         int[] hashMap = {1,3,4};
@@ -25,7 +25,7 @@ public class testScene {
         nodeMap.add(ThreeD.mountNode(20,-20,-20,hashMap7)); //7
        
         
-        Mesh finalMesh = ThreeD.mountNodes(empty, nodeMap);
+        Mesh finalMesh = ThreeD.mountMesh(empty, nodeMap);
         ThreeD.globalMeshArr.add(finalMesh);
     }
     static float x = 0;

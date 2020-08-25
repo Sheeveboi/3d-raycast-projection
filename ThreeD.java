@@ -6,7 +6,7 @@ public class ThreeD {
    
     public static Mesh initMesh(int x, int y, int z) {
         ArrayList<Node> emptyMap = new ArrayList<Node>();
-        return new Mesh(x,y,z,0,0,0,emptyMap,glVars.perspective);
+        return new Mesh(x,y,z,0,0,0,emptyMap);
     }
     public static ArrayList<Node> initNodes() {
         return new ArrayList<Node>();
@@ -15,7 +15,7 @@ public class ThreeD {
         return new Node(x,y,z,hashes);
     }
     
-    public static Mesh mountNodes(Mesh mounted, ArrayList nodes) {
+    public static Mesh mountMesh(Mesh mounted, ArrayList nodes) {
         Mesh newMesh = mounted;
         newMesh.nodes = nodes;
         return newMesh;
