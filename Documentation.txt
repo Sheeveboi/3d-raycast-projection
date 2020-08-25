@@ -60,7 +60,7 @@ class Complex
 
 		returns: double
 
-	eulery(double x, double y, double z, double angleX, double angleY, double angleZ):
+	eulerY(double x, double y, double z, double angleX, double angleY, double angleZ):
 		defines the rotation of points relative to their local Y axis
 		
 		x: point in space on the x axis
