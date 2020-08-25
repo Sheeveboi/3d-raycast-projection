@@ -1,0 +1,9 @@
+#BlueJ class context
+comment0.target=Enviorment
+comment1.params=
+comment1.target=Enviorment()
+comment2.params=args
+comment2.target=void\ main(java.lang.String[])
+comment3.params=c
+comment3.target=void\ paint(java.awt.Graphics)
+numComments=4

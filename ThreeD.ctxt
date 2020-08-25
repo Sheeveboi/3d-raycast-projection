@@ -1,0 +1,11 @@
+#BlueJ class context
+comment0.target=ThreeD
+comment1.params=x\ y\ z
+comment1.target=Mesh\ initMesh(int,\ int,\ int)
+comment2.params=
+comment2.target=java.util.ArrayList\ initNodes()
+comment3.params=x\ y\ z\ hashes
+comment3.target=Node\ mountNode(int,\ int,\ int,\ int[])
+comment4.params=mounted\ nodes
+comment4.target=Mesh\ mountNodes(Mesh,\ java.util.ArrayList)
+numComments=5
