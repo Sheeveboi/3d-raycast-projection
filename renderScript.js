@@ -132,7 +132,8 @@ try {
 
 				this.nodes[i].screenX = ray(rayVector[0], rayVector[1], rayVector[2], 0, 0, 0, t, 0) + center[0];
 				this.nodes[i].screenY = ray(rayVector[0], rayVector[1], rayVector[2], 0, 0, 0, t, 1) + center[1];
-
+				c.fillStyle = "white";
+				c.fillText(ray(rayVector[0], rayVector[1], rayVector[2], 0, 0, 0, t, 0),this.nodes[i].screenX,this.nodes[i].screenY);
 			}
 		}
 
@@ -217,9 +218,10 @@ try {
 		for (var o = 0; o < globalMeshArr.length; o++) {
             c.strokeStyle = "HSL(" + color + ",100%,50%)";
 			c.fillStyle = "black";
-			globalMeshArr[o].ry += .02;
+			/*globalMeshArr[o].ry += .02;
 			globalMeshArr[o].rx += .02;
-			globalMeshArr[o].rz += .02;
+			globalMeshArr[o].rz += .02;*/
+			globalMeshArr[o].x += .2;
 			globalMeshArr[o].render();
 			
 			
